@@ -1,0 +1,9 @@
+backup del equipo S6 KAMBAKUA                 backup del equipo actual
+
+Poner en producción en el equipo HPE		poner en producción el equipo HPE para el S6 KAMBAKUA
+
+Traslado de enlaces				Se retiran los enlaces físicos del equipo CISCO y se conectan por el HPE
+
+Pruebas						Se verifica que levante correctamente todos los servicios del local, se realiza las pruebas con un encargado del local que todo esté operativo
+
+Vuelta atrás					caso encontrarnos con un evento que impida la operativa, se reemplaza de vuelta por el equipo actual

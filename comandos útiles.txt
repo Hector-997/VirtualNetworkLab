@@ -1,0 +1,13 @@
+comandos útiles
+
+undo es para negar/quitar el comando hpe router
+
+interface Vlan-interface70
+undo  ip address 10.70.51.62 255.255.255.192
+
+sacas del ospf
+
+ospf 1 router-id 172.16.13.238
+ area 0.0.0.0
+undo network 10.70.51.0 0.0.0.63
+ con eso le quitas de su local ( para llevar a otro sitio)

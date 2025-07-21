@@ -1,0 +1,397 @@
+[RoS6SanLo]display current-configuration
+#
+ version 7.1.064, Release 0809P33
+#
+ sysname RoS6SanLo
+#
+ telnet server enable
+#
+ security-zone intra-zone default permit
+#
+ospf 1 router-id 172.16.13.28
+ area 0.0.0.0
+  network 10.30.6.0 0.0.0.63
+  network 10.61.10.0 0.0.0.63
+  network 10.65.10.0 0.0.0.63
+  network 10.66.10.0 0.0.0.255
+  network 10.67.10.0 0.0.0.63
+  network 172.16.13.28 0.0.0.0
+  network 172.16.20.248 0.0.0.3
+  network 172.16.27.176 0.0.0.15
+  network 172.16.90.118 0.0.0.0
+  network 172.16.90.233 0.0.0.0
+  network 172.16.91.45 0.0.0.0
+  network 172.16.91.61 0.0.0.0
+  network 172.16.91.77 0.0.0.0
+  network 172.16.91.161 0.0.0.0
+ area 0.0.0.36
+  network 10.61.14.0 0.0.0.15
+  network 10.61.30.0 0.0.0.15
+  network 10.63.10.0 0.0.0.63
+  network 10.123.1.0 0.0.0.255
+  network 10.163.10.0 0.0.0.63
+#
+ dhcp enable
+ dhcp server always-broadcast
+#
+ dns proxy enable
+#
+ password-recovery enable
+#
+vlan 1
+#
+vlan 10
+ name UH
+#
+vlan 12
+ name Oliva
+#
+vlan 15
+ name Contigencia
+#
+vlan 16
+#
+vlan 30
+ name S6BOOM
+#
+vlan 60
+ name cajas
+#
+vlan 61
+ name cajass
+#
+vlan 63
+ name PC´s
+#
+vlan 64
+ name balanzas
+#
+vlan 65
+ name WCORPO
+#
+vlan 66
+ name CCTV
+#
+vlan 67
+ name WRECEP
+#
+vlan 100
+#
+vlan 150
+ name ToStkSanLo
+#
+vlan 170
+ name TO_BK_KM14yMEdio
+#
+vlan 173
+#
+vlan 200
+#
+vlan 500
+ name Capacitacion
+#
+vlan 555
+#
+vlan 700
+ name Bancard
+#
+vlan 701
+ name Bepsa
+#
+vlan 902
+#
+dhcp server ip-pool lan1
+ gateway-list 192.168.0.1
+ network 192.168.0.0 mask 255.255.254.0
+ address range 192.168.1.2 192.168.1.254
+ dns-list 192.168.0.1
+#
+controller Cellular0/0
+#
+interface Aux0
+#
+interface Serial0/0
+#
+interface NULL0
+#
+interface LoopBack0
+ ip address 172.16.13.28 255.255.255.255
+#
+interface Vlan-interface1
+ description Administracion
+ ip address 172.16.20.145 255.255.255.248
+ ip address 172.16.20.249 255.255.255.252 sub
+ ip address 172.16.27.177 255.255.255.240 sub
+ tcp mss 1280
+#
+interface Vlan-interface16
+ description TO BKSanlorenzo
+#
+interface Vlan-interface30
+ ip address 10.61.30.14 255.255.255.240
+#
+interface Vlan-interface60
+ description caja
+ ip address 10.61.14.14 255.255.255.240
+#
+interface Vlan-interface61
+ description cajas
+ ip address 10.61.10.62 255.255.255.192
+#
+interface Vlan-interface63
+ description PC´s
+ ip address 10.63.10.62 255.255.255.192
+ ip address 10.163.10.62 255.255.255.192 sub
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface64
+ description Balanza
+ ip address 10.64.10.62 255.255.255.192
+#
+interface Vlan-interface65
+ description WCORPO
+ ip address 10.65.10.62 255.255.255.192
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface66
+ description CCTV
+ ip address 10.66.10.254 255.255.255.0
+#
+interface Vlan-interface67
+ description WRECEP
+ ip address 10.67.10.62 255.255.255.192
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface150
+ description to stocksanlorenzo
+ ip address 172.16.91.45 255.255.255.252
+ ospf authentication-mode simple cipher $c$3$qK4a4ZXtbGIXic3USjZpCLIXMTSVLmLPHte5
+#
+interface Vlan-interface170
+ description TO_BK_KM14yMEdio
+ ip address 172.16.90.233 255.255.255.252
+ ip address 10.11.11.1 255.255.255.252 sub
+ ospf authentication-mode simple cipher $c$3$6OfUUcDayZFO8fqBEkhFoQ/Mi811PulpJoUo
+#
+interface Vlan-interface173
+ description To_StkSanloCentro
+ ospf authentication-mode simple cipher $c$3$V3ypRwtFazrapMoQpeTIGnNFT5Tsne+dk808
+#
+interface Vlan-interface200
+ description To_Stock_KM_14
+ ospf authentication-mode simple cipher $c$3$egbGSwZ4YzIffYJIgT24bYM+qn5yS2QD3xTq
+#
+interface Vlan-interface500
+ description Capacitacion
+ ip address 10.30.6.62 255.255.255.192
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface700
+ description Bancard
+ ip address 172.16.200.69 255.255.255.252
+#
+interface Vlan-interface701
+ description Bepsa
+ ip address 10.20.30.1 255.255.255.252
+#
+interface Vlan-interface902
+ description ToKambakua
+ ospf authentication-mode simple cipher $c$3$SVZVrpE9OJqHGn7zgyfCC5zgpwj1qK4RAAL9
+#
+interface GigabitEthernet0/0
+ port link-mode route
+ description Tigo
+ ip address 172.17.0.6 255.255.255.252
+#
+interface GigabitEthernet0/1
+ port link-mode route
+ description ToKambakua
+ ip address 172.16.90.118 255.255.255.252
+ ip address 10.11.11.14 255.255.255.252 sub
+#
+interface GigabitEthernet0/2
+ port link-mode route
+ description Conectado-StkKM14
+ ip address 172.16.91.161 255.255.255.252
+ ip address 10.11.11.29 255.255.255.252 sub
+#
+interface GigabitEthernet0/3
+ port link-mode route
+ description To_StkSanloCentro
+ ip address 172.16.91.61 255.255.255.252
+ ip address 10.11.11.21 255.255.255.252 sub
+#
+interface GigabitEthernet0/5
+ port link-mode route
+#
+interface GigabitEthernet0/4
+ port link-mode bridge
+ port link-type trunk
+ port trunk permit vlan all
+#
+interface Tunnel108 mode gre
+ description TO_STOCK_KM14.5
+ ip address 10.11.12.26 255.255.255.252
+ source 10.11.11.29
+ destination 10.11.11.30
+#
+interface Tunnel111 mode gre
+ description Conectado a TIGO
+ mtu 1400
+ bandwidth 512
+ ip address 10.15.10.41 255.255.255.252
+ ospf authentication-mode simple cipher $c$3$omfBynUNETkKST2sBQdkIBVazn8Xgd7+00JR
+ tcp mss 1200
+ source 172.17.0.6
+ destination 172.24.73.206
+ keepalive 3 20
+#
+interface Tunnel503 mode gre
+ description MONITOREO KAMBAKUA
+ ip address 10.11.12.14 255.255.255.252
+ source 10.11.11.14
+ destination 10.11.11.13
+ keepalive 3 20
+#
+interface Tunnel504 mode gre
+ description MONITOREO JRHYPER
+ ip address 10.11.12.17 255.255.255.252
+ source 10.11.11.17
+ destination 10.11.11.18
+ keepalive 3 20
+#
+interface Tunnel505 mode gre
+ description MON_STK_SANLO_CENTRO
+ ip address 10.11.12.21 255.255.255.252
+ source 10.11.11.21
+ destination 10.11.11.22
+ keepalive 3 201
+#
+interface Tunnel506 mode gre
+ description Monitoreo_BK_kM14
+ ip address 10.11.12.9 255.255.255.252
+ source 10.11.11.1
+ destination 10.11.11.2
+ keepalive 3 20
+#
+interface Tunnel521 mode gre
+ description Monitoreo
+ ip address 10.11.12.65 255.255.255.252
+ source 10.11.11.65
+ destination 10.11.11.66
+ keepalive 3 20
+#
+ scheduler logfile size 16
+#
+line class aux
+ user-role network-admin
+#
+line class tty
+ user-role network-operator
+#
+line class vty
+ user-role network-operator
+#
+line aux 0
+ user-role network-admin
+#
+line vty 0 63
+ authentication-mode scheme
+ user-role network-operator
+#
+ ip route-static 10.4.11.32 27 10.20.30.2 description Bepsa_Pro
+ ip route-static 10.107.34.0 27 172.16.200.70
+ ip route-static 172.24.73.206 32 172.17.0.5 description DEFAUIL
+#
+ snmp-agent
+ snmp-agent local-engineid 800063A280DC680C90FADF00000001
+ snmp-agent community write ajv2006ro
+ snmp-agent sys-info version v3
+#
+ ssh server enable
+#
+ password-control enable
+ undo password-control aging enable
+ undo password-control history enable
+ password-control length 6
+ password-control login-attempt 3 exceed lock-time 10
+ password-control update-interval 0
+ password-control login idle-time 0
+#
+domain system
+#
+ domain default enable system
+#
+role name level-0
+ description Predefined level-0 role
+#
+role name level-1
+ description Predefined level-1 role
+#
+role name level-2
+ description Predefined level-2 role
+#
+role name level-3
+ description Predefined level-3 role
+#
+role name level-4
+ description Predefined level-4 role
+#
+role name level-5
+ description Predefined level-5 role
+#
+role name level-6
+ description Predefined level-6 role
+#
+role name level-7
+ description Predefined level-7 role
+#
+role name level-8
+ description Predefined level-8 role
+#
+role name level-9
+ description Predefined level-9 role
+#
+role name level-10
+ description Predefined level-10 role
+#
+role name level-11
+ description Predefined level-11 role
+#
+role name level-12
+ description Predefined level-12 role
+#
+role name level-13
+ description Predefined level-13 role
+#
+role name level-14
+ description Predefined level-14 role
+#
+user-group system
+#
+local-user Sercon class manage
+ service-type ssh telnet terminal http https
+ authorization-attribute user-role level-15
+ authorization-attribute user-role network-admin
+ authorization-attribute user-role network-operator
+#
+local-user admin class manage
+ service-type telnet http
+ authorization-attribute user-role network-admin
+#
+local-user user class manage
+ authorization-attribute user-role network-operator
+#
+cwmp
+ cwmp enable
+#
+ ip http enable
+#
+return

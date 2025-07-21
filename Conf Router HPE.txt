@@ -1,0 +1,175 @@
+Conf Router HPE
+
+undo vlan 70 (borrar vlan)
+
+-hostname ROS6FMORA
+-interface LoopBack0  (MONITOREO)
+ip address 172.16.13.27 255.255.255.255
+
+-int vlan 1 (ADMINISTRACION)
+ ip address 172.16.20.137 255.255.255.248
+ ip address 172.16.21.89 255.255.255.248 sub (SECONDARY)
+
+
+CREACION DE VLANES
+vlan 60
+name Cajas
+int vlan 60 (INGRESAMOS A LA VLAN PARA LA ASIGNACIvON DE LA PUERTA DE ENLACE)
+ ip address 10.60.7.62 255.255.255.192
+
+vlan 65
+name WCORPO
+ip address 10.65.7.62 255.255.255.0
+int vlan 65
+dhcp select relay (ASIGNA EL SERVIDOR DHCP)
+dhcp relay server-address 172.31.11.88
+dhcp relay server-address 172.31.11.89
+
+vlan 67
+name WRECEP
+ip address ip address 10.67.7.62 255.255.255.0
+int vlan 67
+dhcp select relay (ASIGNA EL SERVIDOR DHCP)
+dhcp relay server-address 172.31.11.88
+dhcp relay server-address 172.31.11.89
+
+vlan 163
+name IOT
+INT vlan 163
+ ip address 10.163.7.62 255.255.255.192
+
+vlan 307
+name PC´s
+INT vlan 307
+ip address 192.168.70.254 255.255.255.0
+
+vlan 319
+name LAN Fdomora
+INT vlan 319
+ ip address 10.61.7.62 255.255.255.192
+
+vlan 700
+name Bancard
+INt vlan 700
+ip address 172.16.200.105 255.255.255.252
+
+vlan 701
+name Bepsa
+int vlan 701
+ip address 10.20.30.1 255.255.255.252
+
+
+
+
+int GigabitEthernet0/0
+port link-mode route
+ip address 172.17.0.18 255.255.255.252
+name TIGO
+
+int GigabitEthernet 0/1
+description ToKambakua
+port link-mode bridge
+port access vlan 902
+
+int GigabitEthernet 0/2
+description ToDenisRoa2
+port link-mode bridge
+port access vlan 900
+
+int GigabitEthernet 0/3
+description ToDominosLanVlan72
+port link-mode bridge
+port access vlan 170
+
+int GigabitEthernet 0/4 (al core)
+port link-type trunk
+port trunk permit vlan all
+
+
+
+
+vlan 170
+int vlan 170
+description TODominosFdo
+ ip address 172.16.90.249 255.255.255.252
+ip address 10.12.13.1 255.255.255.252 sub
+ospf authentication-mode simple plain Platafor ( ospf ambos routers)
+
+vlan 900
+int vlan 900
+description ConectadoDenisRoa
+ ip address 172.16.90.122 255.255.255.252
+ip address 10.11.11.10 255.255.255.252 sub
+ospf authentication-mode simple plain Platafor (ospf ambos routers)
+
+vlan 902
+int vlan 902
+description To Kambakua
+ ip address 172.16.91.146 255.255.255.252
+ip address 10.11.11.21 255.255.255.252 sub
+ospf authentication-mode simple plain Platafor (ospf ambos routers)
+
+
+
+ospf 1 router-id 172.16.13.27
+  area 0.0.0.0
+ network 10.15.10.65 0.0.0.0
+ network 172.16.13.27 0.0.0.0
+ network 172.16.20.136 0.0.0.7
+ network 172.16.21.88 0.0.0.7
+ network 172.16.90.122 0.0.0.0
+ network 172.16.90.249 0.0.0.0
+ network 172.16.91.146 0.0.0.0
+  area 0.0.0.35
+ network 192.168.70.0 0.0.0.255
+ network 10.163.7.0 0.0.0.63
+ network 10.60.7.0 0.0.0.63
+ network 10.61.7.0 0.0.0.63
+ network 10.65.7.0 0.0.0.63
+ network 10.67.7.0 0.0.0.63
+                                          
+
+telnet server enable
+
+dhcp enable
+
+local-user Sercon
+password simple Uzb3k1st4N
+authorization-attribute user-role level-15
+service-type ssh telnet terminal http https
+authorization-attribute user-role network-admin
+authorization-attribute user-role network-operator
+
+
+ip route-static 10.4.12.0 255.255.255.224 10.20.30.2
+ip route-static 10.107.4.32 255.255.255.224 172.16.200.106
+ip route-static 172.24.73.204 255.255.255.252 172.17.0.17 description
+ MATRIZTIGO
+
+snmp-agent community write ajv2006ro
+
+snmp-agent sys-info  versión all
+
+ssh server enable
+
+ntp-service enable
+
+ntp-service unicast-server 172.31.10.100
+
+interface Tunnel11 mode gre
+description Conectado a TIGO
+bandwidth 2048
+ ip address 10.15.10.65 255.255.255.252
+ ip mtu 1400
+ tcp mss 1200
+ospf authentication-mode simple plain Platafor
+ospf cost 1000
+  keepalive 3 20
+source 172.17.0.18
+destination 172.24.73.206
+
+
+
+
+
+

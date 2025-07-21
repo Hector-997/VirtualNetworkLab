@@ -1,0 +1,245 @@
+[ROSTKEXPCAMPOJORDAN-GigabitEthernet0/2]display current-configuration
+#
+ version 7.1.059, Release 0306P11
+#
+ sysname ROSTKEXPCAMPOJORDAN
+#
+ telnet server enable
+#
+ospf 1 router-id 172.16.15.66
+ area 0.0.0.0
+  network 10.70.102.0 0.0.0.63
+  network 10.73.102.0 0.0.0.63
+  network 10.73.102.64 0.0.0.63
+  network 10.73.102.128 0.0.0.63
+  network 172.16.15.66 0.0.0.0
+  network 172.16.44.40 0.0.0.7
+  network 192.168.107.225 0.0.0.0
+  network 192.168.107.229 0.0.0.0
+#
+ dhcp enable
+#
+ password-recovery enable
+#
+vlan 1
+ name Administracion
+#
+vlan 70
+ name Cajas
+#
+vlan 73
+ name PCS
+#
+vlan 75
+ name WCORPO
+#
+vlan 77
+ name WRECEP
+#
+vlan 701
+ name BEPSA
+#
+vlan 888
+ name TEISA
+#
+vlan 999
+ name TIGO
+#
+controller Cellular0/0
+#
+interface Aux0
+#
+interface Serial0/0
+#
+interface NULL0
+#
+interface LoopBack0
+ ip address 172.16.15.66 255.255.255.255
+#
+interface Vlan-interface1
+ description ADMINISTRACION
+ ip address 172.16.44.41 255.255.255.248
+#
+interface Vlan-interface70
+ description CAJAS
+ ip address 10.70.102.62 255.255.255.192
+#
+interface Vlan-interface73
+ description PCs
+ ip address 10.73.102.62 255.255.255.192
+#
+interface Vlan-interface75
+ description WCORPO
+ ip address 10.73.102.126 255.255.255.192
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface77
+ description WRECEP
+ ip address 10.73.102.190 255.255.255.192
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface701
+ description VLAN701_BEPSA
+ ip address 10.20.30.1 255.255.255.252
+#
+interface Vlan-interface888
+ description TEISA
+ ip address 172.179.1.82 255.255.255.252
+#
+interface Vlan-interface999
+ description TIGO
+ ip address 172.24.27.50 255.255.255.252
+#
+interface GigabitEthernet0/0
+ port link-mode route
+ ip address dhcp-alloc
+#
+interface GigabitEthernet0/5
+ port link-mode route
+#
+interface GigabitEthernet0/1
+ port link-mode bridge
+ description TEISA
+ port access vlan 999
+#
+interface GigabitEthernet0/2
+ port link-mode bridge
+ description TIGO
+ port access vlan 888
+#
+interface GigabitEthernet0/3
+ port link-mode bridge
+ port access vlan 999
+#
+interface GigabitEthernet0/4
+ port link-mode bridge
+ description ADMIN
+ bandwidth 1024
+ port link-type trunk
+ port trunk permit vlan all
+#
+interface Tunnel888 mode gre
+ description TEISA
+ mtu 1400
+ bandwidth 2048
+ ip address 192.168.107.225 255.255.255.252
+ ospf authentication-mode simple cipher $c$3$famw8NsBXJMNKMHLv94faONVimxvIzLL2u+O
+ tcp mss 1200
+ source 172.179.1.82
+ destination 172.179.1.254
+ keepalive 10 3
+#
+interface Tunnel999 mode gre
+ description TIGO
+ mtu 1400
+ bandwidth 1024
+ ip address 192.168.107.229 255.255.255.252
+ ospf authentication-mode simple cipher $c$3$v9uRw+NQxa1TcjPGFl/CWNJl1T6farbPFLCN
+ tcp mss 1200
+ source 172.24.27.50
+ destination 10.161.6.130
+ keepalive 10 3
+#
+ scheduler logfile size 16
+#
+line class aux
+ user-role network-admin
+#
+line class tty
+ user-role network-operator
+#
+line class vty
+ user-role network-operator
+#
+line aux 0
+ user-role network-admin
+#
+line vty 0 5
+ authentication-mode scheme
+ user-role network-operator
+#
+line vty 6 63
+ user-role network-operator
+#
+ ip route-static 10.4.17.192 27 10.20.30.2
+ ip route-static 10.161.6.130 32 172.24.27.49 description TIGOFTG
+ ip route-static 172.17.224.222 32 172.24.27.49
+ ip route-static 172.179.0.2 32 172.179.1.81
+ ip route-static 172.179.1.254 32 172.179.1.81 description TEISAFTG
+#
+ snmp-agent
+ snmp-agent local-engineid 800063A280E8F724E4818C00000001
+ snmp-agent community read ajv2006ro
+ snmp-agent community read ajvretail
+ snmp-agent sys-info version v2c v3
+ snmp-agent group v2c ajvretail
+#
+ ssh server enable
+#
+domain system
+#
+ domain default enable system
+#
+role name level-0
+ description Predefined level-0 role
+#
+role name level-1
+ description Predefined level-1 role
+#
+role name level-2
+ description Predefined level-2 role
+#
+role name level-3
+ description Predefined level-3 role
+#
+role name level-4
+ description Predefined level-4 role
+#
+role name level-5
+ description Predefined level-5 role
+#
+role name level-6
+ description Predefined level-6 role
+#
+role name level-7
+ description Predefined level-7 role
+#
+role name level-8
+ description Predefined level-8 role
+#
+role name level-9
+ description Predefined level-9 role
+#
+role name level-10
+ description Predefined level-10 role
+#
+role name level-11
+ description Predefined level-11 role
+#
+role name level-12
+ description Predefined level-12 role
+#
+role name level-13
+ description Predefined level-13 role
+#
+role name level-14
+ description Predefined level-14 role
+#
+user-group system
+#
+local-user Sercon class manage
+ password hash $h$6$YYrIj8QcHl6u/1IR$++Zclr0baR+WjWlfPR+1dJn8slwxYJgrv6R3WD6O4j8mEIeiFkk0aJtY5bkOcQTlwzyYg3esP/Kp8VzX7tXZNw==
+ service-type ssh telnet
+ authorization-attribute user-role level-15
+ authorization-attribute user-role network-admin
+ authorization-attribute user-role network-operato
+ authorization-attribute user-role network-operator
+#
+cwmp
+ cwmp enable
+#
+return

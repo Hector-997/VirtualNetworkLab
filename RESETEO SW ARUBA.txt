@@ -1,0 +1,11 @@
+RESETEO SW ARUBA
+
+por cli
+erase startup-config
+save
+y reload
+
+sin accesos privilegiado
+apretar 5  a 10 seg
+cuando los leds parpadean soltamos
+debería resetearse

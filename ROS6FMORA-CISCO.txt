@@ -1,0 +1,364 @@
+ROS6FMORA#sh running-config
+Building configuration...
+
+Current configuration : 8226 bytes
+!
+! Last configuration change at 15:46:40 UTC Thu Sep 5 2024 by Sercon
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname ROS6FMORA
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$Uxva$c39RBHNLwuahIO09Xc.H3/
+!
+aaa new-model
+!
+!
+aaa authentication login default local group radius
+aaa authorization exec default local group radius if-authenticated
+aaa accounting exec default
+ action-type start-stop
+ group radius
+!
+aaa accounting system default
+ action-type start-stop
+ group radius
+!
+!
+!
+!
+!
+!
+aaa session-id common
+!
+!
+!
+!
+no ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+!
+multilink bundle-name authenticated
+!
+!
+!
+license udi pid CISCO1941/K9 sn FTX144300E9
+!
+!
+!
+spanning-tree vlan 1 priority 0
+spanning-tree vlan 307 priority 0
+spanning-tree vlan 319 priority 0
+vtp domain AJVierci
+vtp mode transparent
+username Sercon privilege 15 secret 5 $1$Nhlx$QRf/jU6WPEcvXnFEXCZVF0
+username opmanager privilege 0 secret 5 $1$7F/s$9uWHh6zKwcNsCW3NmhBSC.
+username retail privilege 15 secret 5 $1$..26$v67xVmN3KZ69HC2VYrdqb0
+!
+redundancy
+!
+!
+vlan 10
+ name uh
+!
+vlan 12
+ name oliva
+!
+vlan 15
+ name contingencia
+!
+vlan 67
+ name WRECEP
+!
+vlan 72,170,703,899-900,902,999
+!
+ip tcp mss 1436
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.16.13.27 255.255.255.255
+ !
+!
+interface Tunnel11
+ description Conectado a TIGO
+ bandwidth 2048
+ ip address 10.15.10.65 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1200
+ ip ospf authentication-key 7 097C42080D04111D19
+ ip ospf cost 1000
+ keepalive 3 20
+ tunnel source 172.17.0.18
+ tunnel destination 172.24.73.206
+ !
+!
+interface Tunnel502
+ description Monitoreo RoS6DRoa
+ ip address 10.11.12.10 255.255.255.252
+ keepalive 3 20
+ tunnel source 10.11.11.10
+ tunnel destination 10.11.11.9
+ !
+!
+interface Tunnel503
+ description Monitoreo
+ ip address 10.11.12.13 255.255.255.252
+ keepalive 3 20
+ tunnel source 10.11.11.13
+ tunnel destination 10.11.11.14
+ !
+!
+interface Tunnel505
+ description to Kambakua
+ ip address 10.11.12.21 255.255.255.252
+ keepalive 3 20
+ tunnel source 10.11.11.21
+ tunnel destination 10.11.11.22
+ !
+!
+interface Tunnel506
+ description TO_DOMINOS_FNDOMORA
+ ip address 10.13.12.1 255.255.255.252
+ keepalive 3 20
+ tunnel source 10.12.13.1
+ tunnel destination 10.12.13.2
+ !
+!
+interface GigabitEthernet0/0
+ description conectado a Switch Core
+ no ip address
+ duplex auto
+ speed auto
+ !
+!
+interface GigabitEthernet0/0.1
+ description Administracion
+ encapsulation dot1Q 1 native
+ ip address 172.16.21.89 255.255.255.248 secondary
+ ip address 172.16.20.137 255.255.255.248
+!
+interface GigabitEthernet0/0.60
+ encapsulation dot1Q 60
+ ip address 10.60.7.62 255.255.255.192
+!
+interface GigabitEthernet0/0.65
+ encapsulation dot1Q 65
+ ip address 10.65.7.62 255.255.255.0
+ ip helper-address 172.31.11.88
+ ip helper-address 172.31.11.89
+!
+interface GigabitEthernet0/0.67
+ description WRECEP
+ encapsulation dot1Q 67
+ ip address 10.67.7.62 255.255.255.0
+ ip helper-address 172.31.11.88
+ ip helper-address 172.31.11.89
+!
+interface GigabitEthernet0/0.123
+ description WIFISocial
+ encapsulation dot1Q 123
+ ip address 10.123.24.1 255.255.255.0
+ ip helper-address 172.31.11.88
+ ip helper-address 172.31.11.89
+ shutdown
+!
+interface GigabitEthernet0/0.163
+ description PROMO
+ encapsulation dot1Q 163
+ ip address 10.163.7.62 255.255.255.192
+!
+interface GigabitEthernet0/0.307
+ description PCs
+ encapsulation dot1Q 307
+ ip address 192.168.70.254 255.255.255.0
+ ip flow egress
+!
+interface GigabitEthernet0/0.319
+ description Lan fdo de la Mora
+ encapsulation dot1Q 319
+ ip address 10.61.7.62 255.255.255.192
+ ip flow egress
+!
+interface GigabitEthernet0/0.700
+ description VLAN700_Bancard
+ encapsulation dot1Q 700
+ ip address 172.16.200.105 255.255.255.252
+!
+interface GigabitEthernet0/0.701
+ description VLAN701_BEPSA
+ encapsulation dot1Q 701
+ ip address 10.20.30.1 255.255.255.252
+!
+interface GigabitEthernet0/1
+ description conectado a TIGO
+ ip address 172.17.0.18 255.255.255.252
+ ip flow egress
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet0/0/0
+ description ToKambakua
+ switchport access vlan 902
+ !
+!
+interface FastEthernet0/0/1
+ switchport access vlan 999
+ !
+!
+interface FastEthernet0/0/2
+ description ToDenisRoa2
+ switchport access vlan 900
+ !
+!
+interface FastEthernet0/0/3
+ description TODominosLanVlan72
+ switchport access vlan 170
+ !
+!
+interface Vlan1
+ no ip address
+ shutdown
+ !
+!
+interface Vlan15
+ description Conectado al CORE
+ ip address 192.168.16.19 255.255.255.0
+ ip flow ingress
+ shutdown
+ !
+!
+interface Vlan170
+ description TODominosFdo
+ ip address 10.12.13.1 255.255.255.252 secondary
+ ip address 172.16.90.249 255.255.255.252
+ ip ospf authentication-key 7 097C42080D04111D19
+ !
+!
+interface Vlan703
+ description DENIS
+ no ip address
+ !
+!
+interface Vlan900
+ description ConectadoDenisRoa
+ ip address 10.11.11.10 255.255.255.252 secondary
+ ip address 172.16.90.122 255.255.255.252
+ ip ospf authentication-key 7 13351B131F0D022539
+ !
+!
+interface Vlan902
+ description To Kambakua
+ ip address 10.11.11.21 255.255.255.252 secondary
+ ip address 172.16.91.146 255.255.255.252
+ ip ospf authentication-key 7 097C42080D04111D19
+ !
+!
+interface Vlan999
+ description TIGO
+ no ip address
+ !
+!
+router ospf 1
+ router-id 172.16.13.27
+ log-adjacency-changes
+ area 0 authentication
+ network 10.15.10.65 0.0.0.0 area 0
+ network 10.60.7.0 0.0.0.63 area 35
+ network 10.61.7.0 0.0.0.63 area 35
+ network 10.65.7.0 0.0.0.63 area 35
+ network 10.67.7.0 0.0.0.63 area 35
+ network 10.123.24.0 0.0.0.255 area 0
+ network 10.163.7.0 0.0.0.63 area 35
+ network 172.16.13.27 0.0.0.0 area 0
+ network 172.16.20.136 0.0.0.7 area 0
+ network 172.16.21.88 0.0.0.7 area 0
+ network 172.16.90.122 0.0.0.0 area 0
+ network 172.16.90.249 0.0.0.0 area 0
+ network 172.16.91.146 0.0.0.0 area 0
+ network 192.168.70.0 0.0.0.255 area 35
+!
+ip forward-protocol nd
+!
+ip http server
+ip http authentication local
+no ip http secure-server
+ip flow-cache timeout active 1
+ip flow-export source Vlan15
+ip flow-export version 5
+ip flow-export destination 192.168.211.61 9996
+!
+ip route 10.4.12.0 255.255.255.224 10.20.30.2
+ip route 10.107.4.32 255.255.255.224 172.16.200.106
+ip route 172.24.73.204 255.255.255.252 172.17.0.17 name MATRIZTIGO
+!
+logging 192.168.211.62
+logging 172.31.11.133
+access-list 10 permit any
+access-list 80 permit 172.31.11.170
+access-list 80 permit 172.31.11.133
+access-list 80 permit 192.168.211.199
+access-list 80 permit 192.168.211.63
+access-list 80 permit 192.168.211.62
+access-list 80 permit 192.168.211.61
+access-list 80 permit 192.168.211.60
+access-list 80 permit 192.168.211.120
+access-list 80 permit 192.168.211.90
+access-list 80 permit 192.168.211.64
+!
+!
+!
+!
+!
+snmp-server community ajv2006ro RO
+snmp-server community ajvretail RO
+radius-server host 172.31.11.97 auth-port 1645 acct-port 1646 key 7 13061E010803557878
+radius-server host 172.31.11.99 auth-port 1645 acct-port 1646 key 7 13061E010803557878
+radius-server source-ports extended
+!
+control-plane
+ !
+!
+banner motd ^CCC
+#########################################################################
+##---------------------------------------------------------------------##
+##                         !!!TIC SERCON!!!                            ##
+##          Servicios Contables y Sistemas del Paraguay S.A            ##
+##                                                                     ##
+##                          GRUPO AJVIERCI                             ##
+##                                                                     ##
+##       El acceso a este equipo de comunicacion esta prohibido        ##
+## Solo para Personal Autorizado                                       ##
+##---------------------------------------------------------------------##
+##           Access to this equipment is forbidden                     ##
+##         Authorized Personnel Only                                   ##
+##                                                                     ##
+######################################################################### ^C
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ logging synchronous
+ transport input ssh
+!
+scheduler allocate 20000 1000
+ntp server 192.168.211.128 prefer
+end

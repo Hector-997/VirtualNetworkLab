@@ -1,0 +1,374 @@
+SWSTK-BRASILIA-BALANZA#sh running-config
+Building configuration...
+
+Current configuration : 9869 bytes
+!
+! No configuration change since last restart
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec localtime
+service password-encryption
+!
+hostname SWSTK-BRASILIA-BALANZA
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$NsW2$i.oSr2YkszHPZHfiSpbfZ/
+!
+username dirrazabal privilege 15 secret 5 $1$NB/s$mfTpAkFkHTzx68zwFKp6V.
+username Sercon privilege 15 secret 5 $1$J24F$eAy8yzLHgGNheTHnH/adD1
+username retail privilege 15 password 7 04775A121A75421F28
+aaa new-model
+!
+!
+aaa authentication login default group radius local
+aaa authorization exec default group radius if-authenticated
+aaa accounting exec default start-stop group radius
+aaa accounting system default start-stop group radius
+!
+!
+!
+aaa session-id common
+clock timezone PY -3
+system mtu routing 1500
+vtp domain AJVierci
+vtp mode transparent
+udld aggressive
+
+ip subnet-zero
+no ip source-route
+no ip gratuitous-arps
+!
+no ip domain-lookup
+no ip igmp snooping
+!
+!
+crypto pki trustpoint TP-self-signed-2439889408
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2439889408
+ revocation-check none
+ rsakeypair TP-self-signed-2439889408
+!
+!
+crypto pki certificate chain TP-self-signed-2439889408
+ certificate self-signed 01
+  3082024F 308201B8 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 32343339 38383934 3038301E 170D3933 30333031 30303030
+  34385A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 34333938
+  38393430 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100B22D DE86C52E 0773ED91 01F3D4D1 0A3A63A5 AE1172A3 FCAC3055 D0F8011B
+  9A4478D0 DDF41BD7 0FED2D62 647E83C2 3C65440E 107B959D 9706FAD6 23852CC9
+  53DA0E09 F514C624 835184F4 650A6CD1 EE942BB9 858217AF 58322331 A63A7619
+  A4A22CCF 52819E0D 63D2890F 9BFE5817 AB640D1D D8C4B4BB 893BD539 54E41E11
+  70BD0203 010001A3 77307530 0F060355 1D130101 FF040530 030101FF 30220603
+  551D1104 1B301982 17535753 544B2D42 52415349 4C49412D 42414C41 4E5A412E
+  301F0603 551D2304 18301680 14AFA22B 10944EF7 AEC45C1E 4D03E801 C32F17D7
+  CD301D06 03551D0E 04160414 AFA22B10 944EF7AE C45C1E4D 03E801C3 2F17D7CD
+  300D0609 2A864886 F70D0101 04050003 8181002E 74751935 B0921B45 ED190CF1
+  B330F5BC 5AC7028D 7CED2833 E666C2A2 396025CD 618165CD 4A744603 53C84062
+  2D74BB61 C7DD0BB5 628B9D67 8EEC86F6 D1F512F9 94B76A5F 8A9B09E7 476CA437
+  3CA59578 7178A7D3 A8218A41 1D5613FA DDC753C6 DB46AC18 3E250193 BAFC1A34
+  81EF4EAE 19FAECFE B5BD0C6A 58A5D2A3 BF7C01
+  quit
+!
+!
+!
+!
+!
+errdisable recovery cause bpduguard
+errdisable recovery cause psecure-violation
+errdisable recovery interval 60
+!
+spanning-tree mode rapid-pvst
+spanning-tree loopguard default
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 12,28,41,50
+!
+vlan 59
+ name ffs6lambare
+!
+vlan 63
+ name PCs
+!
+vlan 64
+ name Balanza
+!
+vlan 73,75
+!
+vlan 77
+ name WRECEP
+!
+vlan 78
+ name Escuelita_Brasilia1_Reuniones
+!
+vlan 123
+ name WIFI-S6-LIBRE
+!
+vlan 700
+ name BANCARD
+!
+vlan 1004
+ bridge 1
+!
+vlan 1005
+ bridge 1
+lldp run
+!
+ip tcp synwait-time 10
+!
+!
+interface FastEthernet0/1
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/2
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/3
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/4
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/5
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/6
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/7
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/8
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/9
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/10
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/11
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/12
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/13
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/14
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/15
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/16
+ switchport access vlan 77
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/17
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/18
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/19
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/20
+ switchport access vlan 41
+ switchport mode trunk
+ switchport port-security maximum 4
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/21
+ switchport mode trunk
+!
+interface FastEthernet0/22
+ switchport access vlan 312
+!
+interface FastEthernet0/23
+ switchport access vlan 41
+ switchport mode access
+ switchport port-security maximum 20
+ switchport port-security
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/24
+ switchport mode trunk
+!
+interface GigabitEthernet0/1
+ description ROUT-STOCKLAMBARE
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ switchport mode trunk
+!
+interface Vlan1
+ ip address 172.16.29.211 255.255.255.240
+ no ip route-cache
+!
+ip default-gateway 172.16.29.209
+ip http server
+ip http authentication local
+ip http secure-server
+ip radius source-interface Vlan1 vrf default
+logging 192.168.211.62
+logging 172.31.10.37
+access-list 80 permit 192.168.209.160
+access-list 80 permit 192.168.209.221
+access-list 80 permit 172.31.10.206
+access-list 80 permit 192.168.211.199
+access-list 80 permit 192.168.211.63
+access-list 80 permit 192.168.211.62
+access-list 80 permit 192.168.211.61
+access-list 80 permit 192.168.211.60
+access-list 80 permit 192.168.216.22
+access-list 80 permit 172.31.10.21
+access-list 80 permit 192.168.211.90
+access-list 80 permit 10.75.1.170
+access-list 80 permit 192.168.211.64
+snmp-server community ajv2006ro RW
+snmp-server community ajvretail RO
+radius-server source-ports extended
+!
+control-plane
+!
+banner motd ^C
+#########################################################################
+##---------------------------------------------------------------------##
+##                         !!!TIC SERCON!!!                            ##
+##          Servicios Contables y Sistemas del Paraguay S.A            ##
+##                                                                     ##
+##                          GRUPO AJVIERCI                             ##
+##                                                                     ##
+##       El acceso a este equipo de comunicacion esta prohibido        ##
+##                      Solo para Personal Autorizado                  ##
+##---------------------------------------------------------------------##
+##                Access to this equipment is forbidden                ##
+##                       Authorized Personnel Only                     ##
+##                                                                     ##
+######################################################################### ^C
+privilege exec level 7 show run
+privilege exec level 7 show config
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ exec-timeout 15 0
+ logging synchronous
+line vty 5 15
+ exec-timeout 15 0
+ logging synchronous
+!
+ntp clock-period 36029554
+ntp server 172.31.10.100 prefer
+ntp server 172.31.10.101
+end
+
+SWSTK-BRASILIA-BALANZA#

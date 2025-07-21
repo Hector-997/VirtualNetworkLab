@@ -1,0 +1,68 @@
+SWPASTA(vlan-120)# sh running-config
+
+Running configuration:
+
+; J9776A Configuration Editor; Created on release #YA.16.04.0008
+; Ver #10:19.02.13.98.82.34.61.18.28.f3.84.9c.63.ff.37.27:00
+hostname "SWPASTA"
+ntp server 172.31.10.100
+ip default-gateway 172.16.27.49
+snmp-server community "public" unrestricted
+snmp-server community "ajv2006ro" operator
+aaa authentication local-user "Sercon" group "operator"
+vlan 1
+   name "Administrador"
+   no untagged 1-20
+   untagged 21-28
+   ip address 172.16.27.58 255.255.255.240
+   exit
+vlan 16
+   name "VLAN16"
+   no ip address
+   exit
+vlan 24
+   name "VLAN24"
+   no ip address
+   exit
+vlan 28
+   name "Retail-Modiser"
+   no ip address
+   exit
+vlan 43
+   name "VLAN43"
+   no ip address
+   exit
+vlan 90
+   name "HHPITG"
+   no ip address
+   exit
+vlan 100
+   name "VLAN100"
+   no ip address
+   exit
+vlan 120
+   name "CCTV"
+   tagged 21-28
+   no ip address
+   exit
+vlan 202
+   name "PC"
+   untagged 1-20
+   tagged 21-28
+   no ip address
+   exit
+vlan 214
+   name "WCORPO"
+   tagged 21-28
+   no ip address
+   exit
+vlan 215
+   name "WCORPONEW"
+   tagged 21-28
+   no ip address
+   exit
+no tftp server
+no dhcp config-file-update
+no dhcp image-file-update
+no dhcp tr69-acs-url
+password manager

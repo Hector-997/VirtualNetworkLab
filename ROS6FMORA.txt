@@ -1,0 +1,315 @@
+<ROS6FMORA>system-view
+System View: return to User View with Ctrl+Z.
+[ROS6FMORA]dis
+[ROS6FMORA]display curr
+[ROS6FMORA]display current-configuration
+#
+ version 7.1.064, Release 0707P24
+#
+ sysname ROS6FMORA
+#
+ telnet server enable
+#
+ospf 1 router-id 172.16.13.27
+ area 0.0.0.0
+  network 10.15.10.65 0.0.0.0
+  network 172.16.13.27 0.0.0.0
+  network 172.16.20.136 0.0.0.7
+  network 172.16.21.88 0.0.0.7
+  network 172.16.90.122 0.0.0.0
+  network 172.16.90.249 0.0.0.0
+  network 172.16.91.146 0.0.0.0
+ area 0.0.0.35
+  network 10.60.7.0 0.0.0.63
+  network 10.61.7.0 0.0.0.63
+  network 10.65.7.0 0.0.0.63
+  network 10.67.7.0 0.0.0.63
+  network 10.163.7.0 0.0.0.63
+  network 192.168.70.0 0.0.0.255
+#
+ dhcp enable
+ dhcp server always-broadcast
+#
+ dns proxy enable
+#
+ password-recovery enable
+#
+vlan 1
+#
+vlan 60
+ name Cajas
+#
+vlan 65
+ name WCORPO
+#
+vlan 67
+ name WRECEP
+#
+vlan 163
+ name IOT
+#
+vlan 170
+#
+vlan 307
+ name PC´s
+#
+vlan 319
+ name LanFdo
+#
+vlan 700
+ name Bancard
+#
+vlan 701
+ name Bepsa
+#
+vlan 900
+#
+vlan 902
+#
+controller Cellular0/0
+#
+interface Aux0
+#
+interface Serial0/0
+#
+interface NULL0
+#
+interface LoopBack0
+ ip address 172.16.13.27 255.255.255.255
+#
+interface Vlan-interface1
+ description Administracion
+ ip address 172.16.20.137 255.255.255.248
+ ip address 172.16.21.89 255.255.255.248 sub
+ tcp mss 1280
+#
+interface Vlan-interface60
+ description Cajas
+ ip address 10.60.7.62 255.255.255.192
+#
+interface Vlan-interface65
+ description WCORPO
+ ip address 10.65.7.62 255.255.255.0
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface67
+ description WRECEP
+ ip address 10.67.7.62 255.255.255.0
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface163
+ description IOT
+ ip address 10.163.7.62 255.255.255.192
+#
+interface Vlan-interface170
+ description ToDominosFdo
+ ip address 172.16.90.249 255.255.255.252
+ ip address 10.12.13.1 255.255.255.252 sub
+ ospf authentication-mode simple cipher $c$3$zIvBMye6XbFsr/NFF2c3haPCjV4VPJyWcYNY
+#
+interface Vlan-interface307
+ description PC´s
+ ip address 192.168.70.254 255.255.255.0
+#
+interface Vlan-interface319
+ description LanFdo
+ ip address 10.61.7.62 255.255.255.192
+#
+interface Vlan-interface700
+ description Bancard
+ ip address 172.16.200.105 255.255.255.252
+#
+interface Vlan-interface701
+ description Bepsa
+ ip address 10.20.30.1 255.255.255.252
+#
+interface Vlan-interface900
+ description ConectadoDenisRoa
+ ip address 172.16.90.122 255.255.255.252
+ ip address 10.11.11.10 255.255.255.252 sub
+ ospf authentication-mode simple cipher $c$3$ZOXME+cJi3GOhSdguuocUGozc5XFbkhY6wd7
+#
+interface Vlan-interface902
+ description To Kambakua
+ ip address 172.16.91.146 255.255.255.252
+ ip address 10.11.11.21 255.255.255.252 sub
+ ospf authentication-mode simple cipher $c$3$EiYR3sYLt3fetWSde4XJaZCq+uNWrnKXxQcB
+#
+interface GigabitEthernet0/0
+ port link-mode route
+ description TIGO
+ ip address 172.17.0.18 255.255.255.252
+#
+interface GigabitEthernet0/5
+ port link-mode route
+#
+interface GigabitEthernet0/1
+ port link-mode bridge
+ description ToKambakua
+ port access vlan 902
+#
+interface GigabitEthernet0/2
+ port link-mode bridge
+ description ToDenisRoa
+ port access vlan 900
+#
+interface GigabitEthernet0/3
+ port link-mode bridge
+ description ToDominosLanVlan72
+ port access vlan 170
+#
+interface GigabitEthernet0/4
+ port link-mode bridge
+ description TO_SWITCH_CORE
+ port link-type trunk
+ port trunk permit vlan all
+#
+interface Tunnel11 mode gre
+ description conectado a TIGO
+ bandwidth 2048
+ ip address 10.15.10.65 255.255.255.252
+ ospf authentication-mode simple cipher $c$3$YiuOdd9IQVMIezgCHioDJeNY7rh1VhJLdjfI
+ ospf cost 1000
+ tcp mss 1200
+ ip mtu 1400
+ source 172.17.0.18
+ destination 172.24.73.206
+ keepalive 3 20
+#
+interface Tunnel502 mode gre
+ description Monitoreo RoS6DRoa
+ ip address 10.11.12.10 255.255.255.252
+ source 10.11.11.10
+ destination 10.11.11.9
+ keepalive 3 20
+#
+interface Tunnel503 mode gre
+ description monitoreo
+ ip address 10.11.12.13 255.255.255.252
+ source 10.11.11.13
+ destination 10.11.11.14
+#
+interface Tunnel505 mode gre
+ description 10.11.11.22
+ ip address 10.11.12.21 255.255.255.252
+ source 10.11.11.21
+ keepalive 3 20
+#
+interface Tunnel506 mode gre
+ description TO_DOMINOS_FNDOMORA
+ ip address 10.13.12.1 255.255.255.252
+ source 10.12.13.1
+ destination 10.12.13.2
+ keepalive 3 20
+#
+ scheduler logfile size 16
+#
+line class aux
+ user-role network-admin
+#
+line class tty
+ user-role network-operator
+#
+line class vty
+ user-role network-operator
+#
+line aux 0
+ user-role network-admin
+#
+line vty 0 63
+ authentication-mode scheme
+ user-role network-operator
+#
+ ip route-static 10.4.12.0 27 10.20.30.2
+ ip route-static 10.107.4.32 27 172.16.200.106
+ ip route-static 172.24.73.204 30 172.17.0.17 description MATRIZTIGO
+#
+ snmp-agent
+ snmp-agent local-engineid 800063A2804CAEA3D94D0800000001
+ snmp-agent community write ajv2006ro
+ snmp-agent sys-info version all
+#
+ ssh server enable
+#
+ ntp-service enable
+ ntp-service unicast-server 172.31.10.100
+#
+ password-control enable
+ undo password-control aging enable
+ undo password-control history enable
+ password-control length 6
+ password-control login-attempt 3 exceed lock-time 10
+ password-control update-interval 0
+ password-control login idle-time 0
+#
+domain system
+#
+ domain default enable system
+#
+role name level-0
+ description Predefined level-0 role
+#
+role name level-1
+ description Predefined level-1 role
+#
+role name level-2
+ description Predefined level-2 role
+#
+role name level-3
+ description Predefined level-3 role
+#
+role name level-4
+ description Predefined level-4 role
+#
+role name level-5
+ description Predefined level-5 role
+#
+role name level-6
+ description Predefined level-6 role
+#
+role name level-7
+ description Predefined level-7 role
+#
+role name level-8
+ description Predefined level-8 role
+#
+role name level-9
+ description Predefined level-9 role
+#
+role name level-10
+ description Predefined level-10 role
+#
+role name level-11
+ description Predefined level-11 role
+#
+role name level-12
+ description Predefined level-12 role
+#
+role name level-13
+ description Predefined level-13 role
+#
+role name level-14
+ description Predefined level-14 role
+#
+user-group system
+#
+local-user Sercon class manage
+ service-type ssh telnet terminal http https
+ authorization-attribute user-role level-15
+ authorization-attribute user-role network-admin
+ authorization-attribute user-role network-operator
+#
+local-user admin class manage
+ service-type telnet http
+ authorization-attribute user-role network-admin
+#
+cwmp
+ cwmp enable
+#
+ ip http enable
+#
+return
+[ROS6FMORA]

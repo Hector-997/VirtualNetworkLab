@@ -1,0 +1,333 @@
+SwPastaRetail#sh running-config
+Building configuration...
+
+Current configuration : 8584 bytes
+!
+! Last configuration change at 15:01:03 PYG Fri Jul 19 2024 by Sercon
+! NVRAM config last updated at 15:11:14 PYG Fri Jul 19 2024 by Sercon
+!
+version 15.0
+no service pad
+service timestamps debug uptime
+service timestamps log datetime
+service password-encryption
+service sequence-numbers
+!
+hostname SwPastaRetail
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$Kqqq$nsrOP4Y4TLPudqUiTcQQf0
+!
+username monitoreo password 7 151F04020D3E24362D3C
+username Sercon privilege 15 password 7 0030060803481F55010E
+username retail privilege 15 password 7 0036400A504F5A105E25186A
+no aaa new-model
+clock timezone PYG -4 0
+system mtu routing 1500
+vtp domain AJVierci
+vtp mode transparent
+!
+!
+no ip domain-lookup
+!
+!
+crypto pki trustpoint TP-self-signed-2262526464
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2262526464
+ revocation-check none
+ rsakeypair TP-self-signed-2262526464
+!
+!
+crypto pki certificate chain TP-self-signed-2262526464
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 32323632 35323634 3634301E 170D3933 30333031 30303031
+  30335A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 32363235
+  32363436 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100AF2C BFD70E49 C24F4F1F 8431E8EF 2EC4245B 5BEC30B3 FFF63C78 15411A62
+  66676C48 FCDD6A49 486874A1 0B4D3707 A1C7190B 990D1AF4 F7AF71B0 B3026480
+  9B8CBF81 FC4F5638 BE1E4DF3 1D956EB7 05ECE748 03EE4577 BD3D5B13 5F4FA13B
+  006E5953 D22A6D70 265B1E97 A1D9D680 A04DB557 1359328B CA6050BD 56748BD2
+  35BB0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 142AEBE5 9A86F566 5C055C0D 884BA42D 395B0617 FA301D06
+  03551D0E 04160414 2AEBE59A 86F5665C 055C0D88 4BA42D39 5B0617FA 300D0609
+  2A864886 F70D0101 05050003 81810079 6F2F1AB9 A4FF9CBA 53BBD8F8 6119C751
+  A2B8D10E 7007B525 0B15C96E 80C0B7C0 E123A146 A6FB5C86 F2B21D44 ABB853F2
+  F2D88B64 6BD3E1DB 754B469B 390159BE 5B0A3298 DD729AF9 3EDF724F 370B1C1D
+  B510E8DC 7A573E8E 95AA6CD0 8B816213 559712ED C5B6C979 5B448D10 90278C23
+  B90A05DF 793CEA6B 89A2766B 15DF1B
+        quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 16,24,28,43
+!
+vlan 90
+ name HHPITG
+!
+vlan 100,202
+!
+vlan 214
+ name WCORPO
+!
+vlan 215
+ name 215
+lldp run
+!
+!
+!
+!
+!
+interface Port-channel1
+!
+interface FastEthernet0/1
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/2
+ description To ApItaBazar
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/3
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/4
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/5
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/6
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/7
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ shutdown
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/8
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/9
+ switchport access vlan 202
+ switchport mode access
+!
+interface FastEthernet0/10
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/11
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/12
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/13
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/14
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/15
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/16
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/17
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/18
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/19
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/20
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/21
+ description To ApDepAlmacen
+ switchport access vlan 202
+ switchport mode access
+ switchport port-security maximum 4
+ switchport port-security
+ down-when-looped
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+ switchport mode trunk
+!
+interface FastEthernet0/24
+ description SWCOREPLANTAI
+ switchport mode trunk
+!
+interface GigabitEthernet0/1
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ switchport mode trunk
+!
+interface Vlan1
+ ip address 172.16.27.58 255.255.255.240
+ no ip route-cachevl
+!
+ip default-gateway 172.16.27.49
+ip http server
+ip http secure-server
+snmp-server community ajv2006ro RO
+!
+banner motd ^CC
+#########################################################################
+##---------------------------------------------------------------------##
+##                         !!!TIC RETAIL!!!                            ##
+##                                                                     ##
+##                                                                     ##
+##                          GRUPO AJVIERCI                             ##
+##                                                                     ##
+##                                                                     ##
+##---------------------------------------------------------------------##
+##                Access to this equipment is forbidden                ##
+##                       Authorized Personnel Only                     ##
+##                                                                     ##
+######################################################################### ^C
+!
+line con 0
+ login local
+line vty 0 4
+ login local
+line vty 5 15
+ login local
+!
+ntp server 172.31.10.100
+end
+
+SwPastaRetail#
+
+
+CNFGJST3MV

@@ -1,0 +1,399 @@
+#sh running-config
+Building configuration...
+
+Current configuration : 8905 bytes
+!
+! Last configuration change at 19:07:30 PY Tue Jul 9 2024 by Sercon
+!
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname ros6portal
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$twGQ$X/zyGBF5BSmBhHSYbQ8NK.
+!
+aaa new-model
+!
+!
+aaa authentication login default local group radius
+aaa authorization exec default local group radius if-authenticated
+aaa accounting exec default
+ action-type start-stop
+ group radius
+!
+aaa accounting system default
+ action-type start-stop
+ group radius
+!
+!
+!
+!
+!
+!
+aaa session-id common
+!
+!
+!
+clock timezone PY -3
+!
+no ipv6 cef
+ip source-route
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+!
+multilink bundle-name authenticated
+!
+!
+!
+license udi pid CISCO1941/K9 sn FTX144300E0
+!
+!
+vtp domain AJVierci
+vtp mode transparent
+username Sercon privilege 15 secret 5 $1$/sMu$DeRXdQI8LLh5beq9pqoHK1
+username opmanager privilege 0 secret 5 $1$D.GA$yHgcJ0bHJhwE8g0s4Om9o/
+username retail privilege 15 secret 5 $1$KIpJ$F9KJva2DsncebcH4VhPqT/
+!
+redundancy
+!
+!
+vlan 10
+ name medios
+!
+vlan 11,15
+!
+vlan 67
+ name WRECEP
+!
+vlan 180,318,700
+!
+vlan 908
+ name tomra
+!
+vlan 909
+!
+ip ssh version 2
+!
+!
+!
+!
+crypto dynamic-map VPNs 1
+ reverse-route
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.16.13.25 255.255.255.255
+ !
+!
+interface Tunnel11
+ description Conectado a TIGO
+ bandwidth 4096
+ ip address 10.15.10.21 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1200
+ ip ospf authentication-key 7 00341F07105A0D091D
+ ip ospf cost 1000
+ keepalive 3 20
+ tunnel source 172.17.57.178
+ tunnel destination 172.24.73.206
+ !
+!
+interface Tunnel507
+ description Monitoreo S6Mburucuya
+ ip address 10.11.12.30 255.255.255.252
+ keepalive 3 20
+ tunnel source 10.11.11.30
+ tunnel destination 10.11.11.29
+ !
+!
+interface Tunnel508
+ description Monitoreo Stock Mariano
+ ip address 10.11.12.33 255.255.255.252
+ keepalive 3 20
+ tunnel source 10.11.11.33
+ tunnel destination 10.11.11.34
+ !
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ !
+!
+interface GigabitEthernet0/0.1
+ description Administracion
+ encapsulation dot1Q 1 native
+ ip address 172.16.25.1 255.255.255.240 secondary
+ ip address 172.16.20.121 255.255.255.248
+!
+interface GigabitEthernet0/0.60
+ description CajasGeo
+ encapsulation dot1Q 60
+ ip address 10.60.5.62 255.255.255.192
+!
+interface GigabitEthernet0/0.61
+ description Cajas
+ encapsulation dot1Q 61
+ ip address 10.61.5.62 255.255.255.192
+!
+interface GigabitEthernet0/0.62
+ encapsulation dot1Q 62
+ ip address 10.62.5.62 255.255.255.192
+!
+interface GigabitEthernet0/0.63
+ description PC
+ encapsulation dot1Q 63
+ ip address 10.163.5.62 255.255.255.192 secondary
+ ip address 10.63.5.62 255.255.255.192
+!
+interface GigabitEthernet0/0.64
+ description Balanza
+ encapsulation dot1Q 64
+ ip address 10.64.5.62 255.255.255.192
+!
+interface GigabitEthernet0/0.65
+ description Wcorporativo
+ encapsulation dot1Q 65
+ ip address 10.65.5.62 255.255.255.192
+ ip helper-address 172.31.11.88
+ ip helper-address 172.31.11.89
+!
+interface GigabitEthernet0/0.66
+ encapsulation dot1Q 66
+ ip address 10.56.5.62 255.255.255.192
+!
+interface GigabitEthernet0/0.67
+ description WRECEP
+ encapsulation dot1Q 67
+ ip address 10.67.5.62 255.255.255.192
+ ip helper-address 172.31.11.88
+ ip helper-address 172.31.11.89
+!
+interface GigabitEthernet0/0.100
+ description Tigo - Backup
+ encapsulation dot1Q 100
+ ip address 172.17.57.178 255.255.255.252
+!
+interface GigabitEthernet0/0.123
+ description WIFISocial
+ encapsulation dot1Q 123
+ ip address 10.123.25.1 255.255.255.0
+ ip access-group 2000 in
+ ip access-group 2000 out
+ ip helper-address 172.31.10.100
+ ip helper-address 172.31.10.101
+!
+interface GigabitEthernet0/0.318
+ description conectado a Red Portal 192.168.80
+ encapsulation dot1Q 318
+ ip address 192.168.80.254 255.255.255.0
+ ip flow egress
+!
+interface GigabitEthernet0/0.700
+ description VALN700_Bancard
+ encapsulation dot1Q 700
+ ip address 172.16.200.125 255.255.255.252
+!
+interface GigabitEthernet0/0.701
+ description BEPSA
+ encapsulation dot1Q 701
+ ip address 10.20.30.1 255.255.255.252
+!
+interface GigabitEthernet0/1
+ description ToStockMariano
+ ip address 10.11.11.33 255.255.255.252 secondary
+ ip address 172.16.90.97 255.255.255.252
+ ip ospf authentication-key 7 0811404F1D18031800
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet0/0/0
+ switchport access vlan 908
+ duplex full
+ speed 100
+ !
+!
+interface FastEthernet0/0/1
+ switchport access vlan 908
+ !
+!
+interface FastEthernet0/0/2
+ description Conectado a Camaras UH
+ switchport access vlan 180
+ duplex half
+ speed 10
+ !
+!
+interface FastEthernet0/0/3
+ description conectado S6Mburucuya
+ switchport access vlan 909
+ !
+!
+interface Vlan1
+ no ip address
+ shutdown
+ !
+!
+interface Vlan15
+ description CONECTADO AL CORE
+ ip address 192.168.16.11 255.255.255.0
+ ip flow ingress
+ ip flow egress
+ shutdown
+ !
+!
+interface Vlan180
+ description Camaras UH Portal
+ ip address 172.18.30.5 255.255.255.252
+ !
+!
+interface Vlan909
+ ip address 10.11.11.30 255.255.255.252 secondary
+ ip address 172.16.90.102 255.255.255.252
+ ip ospf authentication-key 7 0811404F1D18031800
+ !
+!
+router ospf 1 router-id 172.16.13.25
+ log-adjacency-changes
+ area 0 authentication						
+ network 10.15.10.21 0.0.0.0 area 0
+ network 10.56.5.0 0.0.0.63 area 33
+ network 10.60.5.0 0.0.0.63 area 33
+ network 10.61.5.0 0.0.0.63 area 0
+ network 10.62.5.0 0.0.0.63 area 33
+ network 10.63.5.0 0.0.0.63 area 33
+ network 10.64.5.0 0.0.0.63 area 33
+ network 10.65.5.0 0.0.0.63 area 33
+ network 10.67.5.0 0.0.0.63 area 33
+ network 10.123.25.0 0.0.0.255 area 0
+ network 10.163.5.0 0.0.0.63 area 33
+ network 172.16.13.25 0.0.0.0 area 0
+ network 172.16.20.120 0.0.0.7 area 0
+ network 172.16.25.0 0.0.0.15 area 0
+ network 172.16.90.97 0.0.0.0 area 0
+ network 172.16.90.102 0.0.0.0 area 0
+ network 172.18.30.4 0.0.0.3 area 33
+ network 192.168.80.254 0.0.0.0 area 33
+
+
+
+area 0.0.0.0
+network 10.15.10.21 0.0.0.0
+ network 10.61.5.0 0.0.0.63
+network 10.123.25.0 0.0.0.255
+network 172.16.13.25 0.0.0.0
+network 172.16.20.120 0.0.0.7
+network 172.16.25.0 0.0.0.15
+network 172.16.90.97 0.0.0.0
+network 172.16.90.102 0.0.0.0
+area 0.0.0.33
+network 10.56.5.0 0.0.0.63
+network 10.60.5.0 0.0.0.63
+network 10.62.5.0 0.0.0.63
+network 10.63.5.0 0.0.0.63
+network 10.64.5.0 0.0.0.63
+network 10.65.5.0 0.0.0.63
+network 10.67.5.0 0.0.0.63
+network 10.163.5.0 0.0.0.63
+network 172.18.30.4 0.0.0.3
+network 192.168.80.254 0.0.0.0
+
+
+
+
+
+!
+ip forward-protocol nd
+!
+ip http server
+ip http authentication local
+no ip http secure-server
+ip flow-cache timeout active 1
+ip flow-export source Vlan15
+ip flow-export version 5
+ip flow-export destination 192.168.211.61 9996
+!
+ip route 10.4.8.128 255.255.255.224 10.20.30.2 name BEPSA
+ip route 10.107.6.192 255.255.255.224 172.16.200.126 name to_bancard
+ip route 172.24.73.206 255.255.255.255 172.17.57.177 name tigo
+!
+logging 192.168.211.62
+logging 192.168.211.207
+logging 172.31.11.133
+access-list 10 permit any
+access-list 2000 permit ip any host 192.168.206.165
+access-list 2000 permit ip any host 172.31.10.100
+access-list 2000 permit ip any host 172.31.10.101
+access-list 2000 permit ip any host 172.31.11.88
+access-list 2000 permit ip any host 172.31.11.89
+access-list 2000 permit ip any host 10.123.25.1
+access-list 2000 permit ip any host 172.16.90.101
+access-list 2000 permit ip any host 172.16.90.105
+access-list 2000 permit ip any host 172.16.90.153
+access-list 2000 permit ip any host 172.16.90.58
+access-list 2000 permit ip any host 172.16.90.62
+access-list 2000 permit ip any host 172.16.90.157
+access-list 2000 deny   ip any 10.0.0.0 0.255.255.255
+access-list 2000 deny   ip any 172.0.0.0 0.255.255.255
+access-list 2000 deny   ip any 192.0.0.0 0.255.255.255
+access-list 2000 permit ip any any
+!
+!
+!
+!
+!
+snmp-server community ajv2006ro RO 80
+snmp-server community ajvretail RO
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+radius-server host 172.31.11.99 auth-port 1645 acct-port 1646 key 7 121A0C0411045D5679
+radius-server host 172.31.11.97 auth-port 1645 acct-port 1646 key 7 121A0C0411045D5679
+radius-server source-ports extended
+!
+control-plane
+ !
+!
+privilege exec level 7 show running-config
+privilege exec level 7 show configuration
+privilege exec level 7 show
+banner motd ^CCC
+#########################################################################
+##---------------------------------------------------------------------##
+##                         !!!TIC SERCON!!!                            ##
+##          Servicios Contables y Sistemas del Paraguay S.A            ##
+##                                                                     ##
+##                          GRUPO AJVIERCI                             ##
+##                                                                     ##
+##       El acceso a este equipo de comunicacion esta prohibido        ##
+## Solo para Personal Autorizado                                       ##
+##---------------------------------------------------------------------##
+##           Access to this equipment is forbidden                     ##
+##         Authorized Personnel Only                                   ##
+##                                                                     ##
+######################################################################### ^C
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ logging synchronous
+ transport input ssh
+line vty 5 15
+!
+scheduler allocate 20000 1000
+ntp server 192.168.211.128
+end
+
+ros6portal#

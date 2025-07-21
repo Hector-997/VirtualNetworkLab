@@ -1,0 +1,339 @@
+
+[ROS6MBURUCUYA]display current-configuration
+#
+ version 7.1.064, Release 0707P24
+#
+ sysname ROS6MBURUCUYA
+#
+ telnet server enable
+#
+ospf 1 router-id 172.16.13.24
+ area 0.0.0.0
+  network 10.15.10.33 0.0.0.0
+  network 10.63.34.0 0.0.0.63
+  network 10.64.34.0 0.0.0.63
+  network 10.65.34.0 0.0.0.255
+  network 10.66.34.0 0.0.0.255
+  network 10.67.34.0 0.0.0.63
+  network 10.123.23.0 0.0.0.255
+  network 10.163.34.0 0.0.0.63
+  network 172.16.13.24 0.0.0.0
+  network 172.16.20.112 0.0.0.7
+  network 172.16.49.136 0.0.0.7
+  network 172.16.55.88 0.0.0.7
+  network 172.16.90.101 0.0.0.0
+  network 172.16.90.106 0.0.0.0
+  network 172.16.91.213 0.0.0.0
+  network 172.18.28.24 0.0.0.7
+ area 0.0.0.32
+  network 10.60.19.0 0.0.0.63
+  network 10.61.19.0 0.0.0.63
+  network 192.168.19.24 0.0.0.7
+  network 192.168.108.0 0.0.0.255
+  network 192.168.150.0 0.0.0.255
+#
+ dhcp enable
+ dhcp server always-broadcast
+#
+ dns proxy enable
+#
+ password-recovery enable
+#
+vlan 1
+ name ADM
+#
+vlan 10
+ name UH
+#
+vlan 12
+ name OLIVA
+#
+vlan 15
+ name REDUNDANCIA
+#
+vlan 19
+ name MEDIOS
+#
+vlan 27
+ name CONECTADO A CAJAS
+#
+vlan 60
+ name CAJAS
+#
+vlan 61
+ name conectado a Red FF 10.61.20
+#
+vlan 65
+ name WCORPO
+#
+vlan 67
+ name WRECEP
+#
+vlan 108
+ name conectado a red 192.168.108
+#
+vlan 163
+ name UIOT
+#
+vlan 200
+ name BALANZAS
+#
+vlan 250
+ name PC
+#
+vlan 315
+ name conectado a Red 192.168.150
+#
+vlan 316
+#
+vlan 700
+ name BANCAR
+#
+vlan 701
+ name BEPSA
+#
+vlan 903
+ name ToTelefuturo
+#
+vlan 904
+#
+vlan 905
+ name to BKMburucuya
+#
+vlan 909
+#
+dhcp server ip-pool lan1
+ gateway-list 192.168.0.1
+ network 192.168.0.0 mask 255.255.254.0
+ address range 192.168.1.2 192.168.1.254
+ dns-list 192.168.0.1
+#
+controller Cellular0/0
+#
+interface Aux0
+#
+interface Serial0/0
+#
+interface NULL0
+#
+interface LoopBack0
+ ip address 172.16.13.24 255.255.255.255
+#
+interface Vlan-interface1
+ description Administracion
+ ip address 172.16.20.113 255.255.255.248
+ ip address 172.16.49.137 255.255.255.248 sub
+ ip address 172.16.55.89 255.255.255.248 sub
+ ip address 172.18.28.25 255.255.255.248 sub
+ tcp mss 1280
+#
+interface Vlan-interface19
+ description Medios
+ ip address 192.168.19.25 255.255.255.248
+#
+interface Vlan-interface27
+ description conectado a cajas
+ ip address 10.61.19.62 255.255.255.192
+#
+interface Vlan-interface60
+ description CAJAS
+ ip address 10.60.19.62 255.255.255.192
+#
+interface Vlan-interface61
+ description conectado a Red FF 10.61.20
+ shutdown
+ ip address 10.61.20.14 255.255.255.240
+#
+interface Vlan-interface65
+ description WCORPO
+ ip address 10.65.34.1 255.255.255.0
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface67
+ description WRECEP
+ ip address 10.67.34.62 255.255.255.192
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface108
+ description conectado a red 192.168.108
+ ip address 192.168.108.1 255.255.255.0
+#
+interface Vlan-interface200
+ description Balanzas
+ ip address 10.64.34.62 255.255.255.192
+#
+interface Vlan-interface250
+ description PC
+ ip address 10.63.34.62 255.255.255.192
+#
+interface Vlan-interface315
+ description conectado a Red 192.168.150
+ ip address 192.168.150.254 255.255.255.0
+ dhcp select relay
+ dhcp relay server-address 172.31.11.88
+ dhcp relay server-address 172.31.11.89
+#
+interface Vlan-interface316
+ ip address 10.66.34.62 255.255.255.192
+#
+interface Vlan-interface700
+ description Bancard
+ ip address 172.16.200.45 255.255.255.252
+#
+interface Vlan-interface701
+ description Bepsa
+ ip address 10.20.30.1 255.255.255.252
+#
+interface Vlan-interface903
+ description ToTelefuturo
+#
+interface GigabitEthernet0/0
+ port link-mode route
+ description conectado a TIGO
+ ip address 172.23.26.110 255.255.255.252
+ ospf authentication-mode simple cipher $c$3$IIpWsfky6SocaQkvrtCaedC8WtgiB2mFrHXo
+#
+interface GigabitEthernet0/1
+ port link-mode route
+ description TO_telefuturo
+ ip address 172.16.90.106 255.255.255.252
+ ip address 10.11.11.26 255.255.255.252 sub
+ ospf authentication-mode simple cipher $c$3$axcTZbEnLIapC5+N5cqakiUm6cle0XCyb3Qu
+#
+interface GigabitEthernet0/2
+ port link-mode route
+ description ToBkMburucuja
+ ip address 172.16.91.213 255.255.255.252
+ ospf authentication-mode simple cipher $c$3$vS+W5w1cznMeL8P+toLBYZ32WlfteX0oKJGj
+#
+interface GigabitEthernet0/3
+ port link-mode route
+ description S6Portal
+ ip address 172.16.90.101 255.255.255.252
+ ip address 10.11.11.29 255.255.255.252 sub
+ ospf authentication-mode simple cipher $c$3$Od2v1lVOJBYfKwGvEAjVu7sCfeuZrznxobLP
+#
+interface GigabitEthernet0/5
+ port link-mode route
+#
+interface GigabitEthernet0/4
+ port link-mode bridge
+ description LAN
+ port link-type trunk
+ port trunk permit vlan all
+#
+ scheduler logfile size 16
+#
+line class aux
+ user-role network-admin
+#
+line class tty
+ user-role network-operator
+#
+line class vty
+ user-role network-operator
+#
+line aux 0
+ user-role network-admin
+#
+line vty 0 63
+ authentication-mode scheme
+ user-role network-operator
+#
+ ip route-static 10.4.11.96 27 10.20.30.2 description BEPSA
+ ip route-static 10.107.2.64 27 172.16.200.46
+ ip route-static 172.24.73.204 30 172.17.57.177 description Tigo
+ ip route-static 172.24.73.204 30 172.23.26.109 description TIGO
+#
+ snmp-agent
+ snmp-agent local-engineid 800063A2804CAEA3D9578B00000001
+ snmp-agent community write ajv2006ro
+ snmp-agent community read ajvretail
+ snmp-agent sys-info version all
+#
+ ssh server enable
+#
+ ntp-service enable
+ ntp-service unicast-server 172.31.10.100
+#
+user-profile Sercon
+#
+ password-control enable
+ undo password-control aging enable
+ undo password-control history enable
+ password-control length 6
+ password-control login-attempt 3 exceed lock-time 10
+ password-control update-interval 0
+ password-control login idle-time 0
+#
+domain system
+#
+ domain default enable system
+#
+role name level-0
+ description Predefined level-0 role
+#
+role name level-1
+ description Predefined level-1 role
+#
+role name level-2
+ description Predefined level-2 role
+#
+role name level-3
+ description Predefined level-3 role
+#
+role name level-4
+ description Predefined level-4 role
+#
+role name level-5
+ description Predefined level-5 role
+#
+role name level-6
+ description Predefined level-6 role
+#
+role name level-7
+ description Predefined level-7 role
+#
+role name level-8
+ description Predefined level-8 role
+#
+role name level-9
+ description Predefined level-9 role
+#
+role name level-10
+ description Predefined level-10 role
+#
+role name level-11
+ description Predefined level-11 role
+#
+role name level-12
+ description Predefined level-12 role
+#
+role name level-13
+ description Predefined level-13 role
+#
+role name level-14
+ description Predefined level-14 role
+#
+user-group system
+#
+local-user Sercon class manage
+ service-type ssh telnet terminal http https
+ authorization-attribute user-role level-15
+ authorization-attribute user-role network-admin
+ authorization-attribute user-role network-operator
+#
+local-user admin class manage
+ service-type telnet http
+ authorization-attribute user-role network-admin
+#
+cwmp
+ cwmp enable
+#
+ ip http enable
+#
+return

@@ -1,0 +1,17 @@
+
+con esta config, hacemos que la red solicite autenticación en los ap cisco
+
+dot11 ssid WCORPORATIVO
+   vlan 65
+   authentication open eap eap_local
+   authentication network-eap eap_local
+   authentication key-management wpa
+   mbssid guest-mode
+
+
+
+con el comando de abajo vemos los dispositivos conectados
+sh dot11 associattions 
+
+con el sgte comando vemos las alertas
+Show logging

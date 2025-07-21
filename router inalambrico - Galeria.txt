@@ -1,0 +1,177 @@
+
+Building configuration...
+
+Current configuration : 2818 bytes
+!
+version 15.4
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Router_Wisky_GALERIA
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging buffered 51200 warnings
+enable password Yug0sl4v1A
+!
+no aaa new-model
+memory-size iomem 10
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+ip dhcp excluded-address 10.68.16.62
+ip dhcp excluded-address 10.68.16.2 10.68.16.62
+!
+ip dhcp pool cajas
+ network 10.68.16.0 255.255.255.192
+ default-router 10.68.16.62
+ dns-server 172.31.10.100 172.31.10.101
+ lease 5
+!
+!
+!
+no ip domain lookup
+ip domain name yourdomain.com
+ip cef
+no ipv6 cef
+!
+!
+multilink bundle-name authenticated
+vpdn enable
+!
+cts logging verbose
+license udi pid CISCO881-K9 sn FTX1339818C
+license boot module c880-data level advipservices
+!
+!
+archive
+ log config
+  hidekeys
+username Sercon privilege 15 secret 5 $1$JL73$Fe7OAH9kSUrk.ClnHJl7T0
+username retail privilege 15 secret 5 $1$fyQf$Q9T/TYDMglYD8lHyJZ.dD/
+!
+!
+!
+!
+no cdp run
+!
+pseudowire-class L2TPv2
+ encapsulation l2tpv2
+ ip local interface FastEthernet4
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Tunnel6001
+ description to_Uruguay
+ bandwidth 512
+ ip address 192.168.155.18 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1200
+ ip ospf authentication-key Platafor
+ keepalive 3 20
+ tunnel source 192.168.92.20
+ tunnel destination 192.168.92.1
+!
+interface FastEthernet0
+ switchport access vlan 68
+ no ip address
+!
+interface FastEthernet1
+ switchport access vlan 68
+ no ip address
+!
+interface FastEthernet2
+ switchport access vlan 68
+ no ip address
+!
+interface FastEthernet3
+ switchport access vlan 68
+ no ip address
+!
+interface FastEthernet4
+ ip address 192.168.8.108 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Virtual-PPP6
+ ip address 192.168.92.20 255.255.255.0
+ no peer neighbor-route
+ ppp pap sent-username VPSerconDN001 password 0 T1CS3rcON1
+ no cdp enable
+ pseudowire 190.0.129.99 2 encapsulation l2tpv2 pw-class L2TPv2
+!
+interface Vlan1
+ description $ETH_LAN$
+ no ip address
+ ip tcp adjust-mss 1452
+!
+interface Vlan68
+ description LAN
+ ip address 10.68.16.62 255.255.255.192
+ ip helper-address 172.31.10.100
+ ip helper-address 172.31.10.101
+ ip virtual-reassembly in
+!
+router ospf 1
+ area 0 authentication
+ network 10.68.16.0 0.0.0.63 area 0
+ network 192.168.155.18 0.0.0.0 area 0
+!
+ip forward-protocol nd
+no ip http server
+ip http access-class 23
+ip http authentication local
+no ip http secure-server
+ip http timeout-policy idle 60 life 86400 requests 10000
+!
+!
+ip route 0.0.0.0 0.0.0.0 192.168.8.1
+ip route 190.0.129.99 255.255.255.255 192.168.8.1
+ip ssh version 1
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ login local
+ no modem enable
+line aux 0
+line vty 0 4
+ access-class 23 in
+ privilege level 15
+ login local
+ transport input all
+ transport output all
+!
+no scheduler max-task-time
+!

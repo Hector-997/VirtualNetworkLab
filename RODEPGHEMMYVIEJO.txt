@@ -1,0 +1,272 @@
+RODEPGHEMMY#sh running-config
+Building configuration...
+
+Current configuration : 5271 bytes
+!
+! Last configuration change at 15:19:17 UTC Tue Jul 16 2024 by Sercon
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname RODEPGHEMMY
+!
+boot-start-marker
+boot-end-marker
+!
+logging buffered 51200 warnings
+enable secret 5 $1$w/k9$tEIGDboWrkS0MZQzaV8w7.
+!
+no aaa new-model
+!
+!
+!
+memory-size iomem 10
+!
+!
+ip source-route
+!
+!
+ip dhcp excluded-address 10.10.10.1
+!
+ip dhcp pool ccp-pool
+   import all
+   network 10.10.10.0 255.255.255.248
+   default-router 10.10.10.1
+   lease 0 2
+!
+!
+ip cef
+ip cef load-sharing algorithm universal 82525216
+no ip domain lookup
+ip domain name RODEPGHEMMY
+ip name-server 192.168.211.128
+ip ips memory threshold 16
+no ipv6 cef
+ipv6 cef load-sharing algorithm universal 82525216
+!
+!
+multilink bundle-name authenticated
+license udi pid CISCO881-SEC-K9 sn FTX145301PG
+!
+!
+username Sercon privilege 15 secret 5 $1$Z5gJ$2I.j0.xs1oSLDaKRroy6h.
+username opmanager privilege 0 secret 5 $1$6ekE$dVxtnwVUTn/pCrB5KB1ud/
+username retail privilege 15 secret 5 $1$Yj94$t1DcH5Igxr1G8vPTntha4.
+scripting tcl low-memory 37529358
+!
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.16.15.22 255.255.255.255
+ !
+!
+interface Tunnel505
+ description Monitoreo Stock Capiata 2
+ ip address 10.11.12.69 255.255.255.252
+ keepalive 3 20
+ tunnel source 10.11.11.69
+ tunnel destination 10.11.11.70
+ !
+!
+interface Tunnel516
+ description Monitoreo Planta Itaugua
+ ip address 10.11.12.61 255.255.255.252
+ keepalive 3 20
+ tunnel source 10.11.11.61
+ tunnel destination 10.11.11.62
+ !
+!
+interface Tunnel888
+ description To Central - Tigo FO
+ bandwidth 512
+ ip address 10.15.10.18 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1200
+ ip ospf authentication-key 7 097C42080D04111D19
+ ip ospf cost 1000
+ keepalive 3 20
+ tunnel source 172.24.28.30
+ tunnel destination 172.24.73.206
+ !
+!
+interface FastEthernet0
+ description TIGO
+ switchport access vlan 88SH R8
+ !
+!
+interface FastEthernet1
+ description --->ADM
+ switchport mode trunk
+ !
+!
+interface FastEthernet2
+ description Stok Capiata
+ switchport access vlan 998
+ !
+!
+interface FastEthernet3
+ description Planta
+ switchport access vlan 997
+ !
+!
+interface FastEthernet4
+ no ip address
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet4.1
+ description Administracion
+ encapsulation dot1Q 1 native
+ ip address 172.16.30.145 255.255.255.240
+ shutdown
+!
+interface FastEthernet4.73
+ description PCs
+ encapsulation dot1Q 73
+ ip address 10.68.11.62 255.255.255.192
+ shutdown
+!
+interface FastEthernet4.75
+ description WCORPO
+ encapsulation dot1Q 75
+ ip address 10.68.12.62 255.255.255.192
+ ip helper-address 172.31.11.88
+ ip helper-address 172.31.11.89
+ shutdown
+!
+interface FastEthernet4.76
+ description CCTV
+ encapsulation dot1Q 76
+ ip address 10.68.130.62 255.255.255.192
+!
+interface FastEthernet4.77
+ description COLECTORES
+ encapsulation dot1Q 77
+ ip address 10.68.10.62 255.255.255.192
+ ip helper-address 172.31.11.88
+ ip helper-address 172.31.11.89
+!
+interface Vlan1
+ ip address 172.16.30.145 255.255.255.240
+ !
+!
+interface Vlan73
+ description Pc's
+ ip address 10.68.11.62 255.255.255.192
+ !
+!
+interface Vlan75
+ description WCORPO
+ ip address 10.68.12.62 255.255.255.192
+ ip helper-address 172.31.11.88
+ ip helper-address 172.31.11.89
+ !
+!
+interface Vlan888
+ description Tigo-Fo
+ ip address 172.24.28.30 255.255.255.252
+ ip ospf authentication-key 7 0334570A120E27435C
+ !
+!
+interface Vlan997
+ description TO PLANTA ITAUGUA
+ ip address 10.11.11.61 255.255.255.252 secondary
+ ip address 172.16.90.237 255.255.255.252
+ ip ospf authentication-key 7 046B07071B204A411B
+ !
+!
+interface Vlan998
+ description TO STOCK CAPIATA
+ ip address 10.11.11.69 255.255.255.252 secondary
+ ip address 172.16.90.169 255.255.255.252
+ ip ospf authentication-key 7 12290916060A0A0B38
+ !
+!
+router ospf 1
+ router-id 172.16.15.22
+ log-adjacency-changes
+ area 0 authentication
+ network 10.15.10.18 0.0.0.0 
+ network 10.68.10.0 0.0.0.63
+ network 10.68.11.0 0.0.0.63 
+ network 10.68.12.0 0.0.0.63 
+ network 10.68.130.0 0.0.0.63 
+ network 172.16.15.22 0.0.0.0 
+ network 172.16.30.144 0.0.0.0 
+ network 172.16.30.144 0.0.0.15 
+ network 172.16.90.169 0.0.0.0 
+ network 172.16.90.237 0.0.0.0 
+
+ ospf 1 router-id 172.16.15.22
+area 0.0.0.0
+network 10.15.10.18 0.0.0.0 
+ network 10.68.10.0 0.0.0.63
+ network 10.68.11.0 0.0.0.63 
+ network 10.68.12.0 0.0.0.63 
+ network 10.68.130.0 0.0.0.63 
+ network 172.16.15.22 0.0.0.0 
+ network 172.16.30.144 0.0.0.0 
+ network 172.16.30.144 0.0.0.15 
+ network 172.16.90.169 0.0.0.0 
+ network 172.16.90.237 0.0.0.0 
+
+
+
+
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+!
+ip route 172.24.73.206 255.255.255.255 172.24.28.29 name tigo
+!
+kron occurrence PRO_INTERFACE_UP in 2 recurring system-startup
+ policy-list INTERFACE_UP
+!   
+logging trap debugging
+logging 172.31.11.133
+!
+!
+!
+!
+snmp-server view *ilmi system included
+snmp-server view *ilmi atmForumUni included
+snmp-server view v1default iso included
+snmp-server view v1default internet.6.3.15 excluded
+snmp-server view v1default internet.6.3.16 excluded
+snmp-server view v1default internet.6.3.18 excluded
+snmp-server view v1default ciscoMgmt.394 excluded
+snmp-server view v1default ciscoMgmt.395 excluded
+snmp-server view v1default ciscoMgmt.399 excluded
+snmp-server view v1default ciscoMgmt.400 excluded
+snmp-server community ajv2006ro RO 80
+!
+control-plane
+ !
+!
+!
+line con 0
+ login local
+ no modem enable
+line aux 0
+line vty 0 4
+ privilege level 15
+ login local
+ transport input all
+ transport output all
+!
+scheduler max-task-time 5000
+end 
+
